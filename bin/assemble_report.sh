@@ -1,3 +1,13 @@
 #!/bin/bash
 
-bin/wrap_contents.sh (cat $1/username_dist.html $1/hours_dist.html $1/country_dist.html) summary_plots.html failed_login_summary.html
+html_directory=$1
+temp=$(mktemp)
+here=$(pwd)
+cd $html_directory
+
+cat country_dist.html hours_dist.html username_dist.html > $temp
+cd $here
+
+bash bin/wrap_contents.sh $temp  html_components/summary_plots $html_directory/failed_login_summary.html
+
+rm $temp
